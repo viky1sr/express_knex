@@ -3,19 +3,19 @@ const db = require('../../database/db');
 
 class BookDao {
     async createBook(nameBook){
-        const [id] = await db('books').insert({
+        const [data] = await db('books').insert({
            name_book: nameBook
-        }).returning('id');
+        }).returning('*');
 
-        return id;
+        return data;
     }
 
     async updateBook(nameBook,Id) {
-        const [id] = await db('books').where({id: Id}).update({
+        const [data] = await db('books').where({id: Id}).update({
             name_book: nameBook
-        }).returning('id');
+        }).returning('*');
 
-        return id;
+        return data;
     }
 }
 

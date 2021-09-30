@@ -24,11 +24,7 @@ const register = expressAsyncHandler(async (req, res) => {
     }
 
     const user = UserService.createUser;
-    const id = await user(req.body);
-
-    const data = await db('users').where({id:id}).then(row => {
-        return row;
-    });
+    const data = await user(req.body);
 
     res.status(201).json({
         status: true,
