@@ -1,28 +1,7 @@
 const UserService = require('../services/UserService');
 const expressAsyncHandler = require('express-async-handler');
-const db = require('../../database/db');
 
 const register = expressAsyncHandler(async (req, res) => {
-    const { email, password, password_confirmation } = req.body;
-    if (password !== password_confirmation) {
-        res.status(422).json({
-            status: false,
-            message: 'Password do not match.'
-        })
-    }
-
-    const userDB = await db('users').where({email: email})
-        .then( row => {
-            return row[0].email;
-        });
-
-    if(userDB !== undefined ) {
-        res.status(422).json({
-            status: false,
-            message: 'Email is already registered.'
-        })
-    }
-
     const user = UserService.createUser;
     const data = await user(req.body);
 
@@ -32,6 +11,23 @@ const register = expressAsyncHandler(async (req, res) => {
     });
 })
 
+const updateUser = expressAsyncHandler(async (req, res, next) => {
+    const user = UserService.updateUser;
+    const data = await user({
+        Id: req.params.id,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        password: req.body.password
+    });
+
+    res.status(201).json({
+        status: true,
+        user: data
+    });
+});
+
 module.exports = {
-    register
+    register,
+    updateUser
 };
