@@ -16,14 +16,10 @@ const store = expressAsyncHandler( async (req, res, next) => {
 });
 
 const update = expressAsyncHandler( async (req, res, next) => {
-    const data = await db('books').where({id:req.params.id}).then( row => {
-        return row;
-    })
-
     const book = BookService.updateBook;
 
     const id = await book({
-        Id: data[0].id,
+        Id: req.params.id,
         nameBook: req.body.nameBook
     });
 
