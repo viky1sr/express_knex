@@ -27,6 +27,20 @@ class UserDao {
 
         return data;
     }
+
+    async findById(Id) {
+        const [data] = await db('users').where({id: Id}).select('*');
+
+        return data;
+    }
+
+    async getAll(){
+        const data = await db('users').where('id','<>',0).select('*').then(rows => {
+            return rows;
+        });
+
+        return data;
+    }
 }
 
 module.exports = new UserDao();

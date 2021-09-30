@@ -17,6 +17,19 @@ class BookDao {
 
         return data;
     }
+
+    async findById(Id) {
+        const [data] = await db('books').where({id: Id}).select('*')
+
+        return data;
+    }
+
+    async getAll() {
+        const data = await db('books').where('id','<>',0).select('*').then( rows => {
+            return rows;
+        })
+        return data;
+    }
 }
 
 module.exports = new BookDao();

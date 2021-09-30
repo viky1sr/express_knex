@@ -10,6 +10,15 @@ class UserService {
         const {firstName, lastName, email, password,Id} = userDto;
         return UserDao.updateUser(firstName, lastName, email, password,Id);
     }
+
+    findById(userDto) {
+        const {Id} = userDto;
+        return UserDao.findById(Id);
+    }
+
+    getAll(){
+        return UserDao.getAll();
+    }
 }
 
 module.exports = new UserService();
